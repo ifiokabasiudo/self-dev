@@ -1,3 +1,5 @@
+'use client'
+
 import {
   Container,
   Stack,
@@ -13,8 +15,15 @@ import {
   IconProps,
   useColorModeValue,
 } from '@chakra-ui/react'
+import { useRouter } from 'next/navigation'
 
 export default function HomePage() {
+  const router = useRouter()
+
+  const handleStart = () => {
+      router.push('/app')
+  }  
+
   return (
     <Container maxW={'7xl'}>
       <Stack
@@ -59,6 +68,7 @@ export default function HomePage() {
               size={'lg'}
               fontWeight={'500'}
               px={6}
+              onClick={handleStart}
             //   colorScheme={'white'}
               color={'#3717B6'}
               bg={'#FFFFFF'}

@@ -1,8 +1,16 @@
-'use client'
-// import Client from './client'
+import Auxi from './auxi'
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
+import { cookies } from 'next/headers'
 
-export default function Home ({user}: any) {
-    console.log(user)
 
-    return <h1>user</h1>
+export default async function Test () {
+    const supabase = createServerComponentClient({ cookies })
+
+        const {
+            data: { session },
+          } = await supabase.auth.getSession()
+
+        console.log(session)
+
+    return <Auxi session = {session} />
 }

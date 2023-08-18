@@ -20,10 +20,25 @@ import {
   ChevronDownIcon,
   ChevronRightIcon,
 } from '@chakra-ui/icons'
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 
-export default function Header() {
+export default function Header({session4}: any) {
+  const supabase = createClientComponentClient()
   const { isOpen, onToggle } = useDisclosure()
 
+  const signOut = () => {
+    const signOutFunction = async () => {
+        await supabase.auth.signOut()
+    }
+    signOutFunction()
+  }
+
+  let username
+
+  if(session4){
+    username = session4.user.user_metadata.full_name
+    console.log(username)
+  }
   return (
     <Box>
       <Flex
@@ -70,32 +85,43 @@ export default function Header() {
           justify={'flex-end'}
           direction={'row'}
           spacing={6}>
+          {session4 ?
+          <>
+            <Text
+            textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
+            fontFamily={'heading'}
+            // color={useColorModeValue('gray.800', 'white')}
+            color={"#EEEEEE"}
+            >
+            Hi, {username}
+          </Text>
           <Button
+          display={{ base: 'none', md: 'inline-flex' }}
+          fontSize={'sm'}
+          fontWeight={600}
+          color={'#3717B6'}
+          bg={'#FFFFFF'}
+          onClick={signOut}
+          _hover={{
+            bg: '#EEEEEE',
+          }}>
+          Sign Out
+          </Button>
+        </>
+          :
+            <Button
             as={'a'}
             display={{ base: 'none', md: 'inline-flex' }}
             fontSize={'sm'}
             fontWeight={600}
             color={'#3717B6'}
             bg={'#FFFFFF'}
-            href={'#'}
+            href={'/signin'}
             _hover={{
               bg: '#EEEEEE',
             }}>
-            Sign In
-          </Button>
-          <Button
-            as={'a'}
-            display={{ base: 'none', md: 'inline-flex' }}
-            fontSize={'sm'}
-            fontWeight={600}
-            color={'#3717B6'}
-            bg={'#FFFFFF'}
-            href={'#'}
-            _hover={{
-              bg: '#EEEEEE',
-            }}>
-            Sign Up
-          </Button>
+            Sign In with Google
+          </Button>}
         </Stack>
       </Flex>
 
@@ -256,41 +282,50 @@ interface NavItem {
 
 const NAV_ITEMS: Array<NavItem> = [
   {
-    label: 'Inspiration',
+    label: 'Home',
+    href: '#Home'
+  },
+  {
+    label: 'Features',
+    href: '#Features',
     children: [
       {
-        label: 'Explore Design Work',
-        subLabel: 'Trending Design to inspire you',
-        href: '#',
+        label: 'Accounter',
+        subLabel: 'Keep account of all your funds',
+        href: '/app/accounter',
       },
       {
-        label: 'New & Noteworthy',
-        subLabel: 'Up-and-coming Designers',
-        href: '#',
+        label: 'Library',
+        subLabel: 'Read, Organize and store books',
+        href: '/app/books',
+      },
+      {
+        label: 'Planner',
+        subLabel: 'Organise your life',
+        href: '/app/planner',
+      },
+      {
+        label: 'Timer',
+        subLabel: 'Time your work',
+        href: '/app/timer',
+      },
+      {
+        label: 'Workout',
+        subLabel: 'Keep fit with workout',
+        href: '/app/workout',
       },
     ],
   },
   {
-    label: 'Find Work',
-    children: [
-      {
-        label: 'Job Board',
-        subLabel: 'Find your dream design job',
-        href: '#',
-      },
-      {
-        label: 'Freelance Projects',
-        subLabel: 'An exclusive list for contract work',
-        href: '#',
-      },
-    ],
+    label: 'Testimonials',
+    href: '#Testimonials',
   },
   {
-    label: 'Learn Design',
-    href: '#',
+    label: 'About Us',
+    href: '#About-Us',
   },
   {
-    label: 'Hire Designers',
-    href: '#',
+    label: 'Contact Us',
+    href: '#Contact-Us',
   },
 ]

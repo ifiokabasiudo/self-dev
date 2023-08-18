@@ -1,13 +1,17 @@
-'use client'
+import Page1 from './page1'
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
+import { cookies } from 'next/headers'
 
-import * as React from 'react'
-import { ChakraProvider } from '@chakra-ui/react'
-import PageLayout from './pageLayout';
 
-export default function Home() {
-  return (
-    <ChakraProvider>
-        <PageLayout />
-    </ChakraProvider>
-  )
+export default async function Home () {
+    const supabase = createServerComponentClient({ cookies })
+
+        const {
+            data: { session },
+          } = await supabase.auth.getSession()
+
+        console.log("Home " + session)
+    
+
+    return <Page1 session = {session} />
 }

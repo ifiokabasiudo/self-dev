@@ -1,4 +1,4 @@
-import Page1 from './page1'
+import Signin from './signin'
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
 
@@ -10,8 +10,7 @@ export default async function Test () {
             data: { session },
           } = await supabase.auth.getSession()
 
-        console.log("dashboard " + session)
-    
+        console.log("signin " + session)  
 
-    return <Page1 session = {session} />
+    return <Signin session = {session} />
 }
