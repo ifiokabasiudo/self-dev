@@ -10,8 +10,7 @@ export default async function Test () {
             data: { session },
           } = await supabase.auth.getSession()
 
-        console.log("planner " +session)
-    
+        console.log("planner " + JSON.stringify(session))    
 
     return <Page1 session = {session} />
 }

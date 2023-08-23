@@ -46,7 +46,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
   return (
     <Box
       transition="3s ease"
-      w={{ base: 'full', md: '15%' }}
+      w={{ base: 'full', md: '206px' }}
       pos="fixed"
       h="full"
       bgGradient='linear(to-b, #3717B6, #8750D0)'
@@ -118,7 +118,7 @@ const LeftNavbar = () => {
         onOverlayClick={onClose}
         size="full">
         <DrawerContent>
-          <SidebarContent onClose={onClose} />
+          <SidebarContent onClose={onOpen} />
         </DrawerContent>
       </Drawer>
     </>
